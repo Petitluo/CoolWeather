@@ -100,7 +100,7 @@ public class ChooseAreaFragment extends Fragment {
         queryProvinces();   // 加载省级数据
     }
     /**
-     * 查询全国所有的省，优先从数据库中查询，如果没有查询到再到服务器上查询
+     * 查询全国所有的省，优先从数据库中查，如果没有查询到再到服务器上查
      */
     private void queryProvinces() {
         titleText.setText("中国");    // 设置头布局标题
@@ -120,7 +120,7 @@ public class ChooseAreaFragment extends Fragment {
         }
     }
     /**
-     * 查询选中县内所有的市，优先从数据库中查询，如果没有查询到再到服务器上查询
+     * 查询选中县内所有的市，优先从数据库中查，如果没有查询到再到服务器上查
      */
     private void queryCities() {
         titleText.setText(selectedProvince.getProvinceName());
@@ -147,7 +147,7 @@ public class ChooseAreaFragment extends Fragment {
     private void queryCounties() {
         titleText.setText(selectedCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
-        countyList = DataSupport.where("cityid=?", String.valueOf(selectedCity.getId()))
+        countyList = DataSupport.where("cityId=?", String.valueOf(selectedCity.getId()))
                 .find(County.class);
         if (countyList.size() > 0) {
             dataList.clear();
@@ -228,4 +228,5 @@ public class ChooseAreaFragment extends Fragment {
             progressDialog.dismiss();
         }
     }
+
 }
