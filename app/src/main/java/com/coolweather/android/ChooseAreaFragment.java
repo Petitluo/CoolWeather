@@ -1,6 +1,7 @@
 package com.coolweather.android;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class ChooseAreaFragment extends Fragment {
+
     /**
      * 宏定义试图的不同级别
      */
@@ -75,6 +77,18 @@ public class ChooseAreaFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // 设置 ListView 和 Button 的点击事件
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (currentLevel == LEVEL_PROVINCE) {
+                    selectedProvince = provinceList.get(position);
+                    queryCities();
+                } else if (currentLevel == LEVEL_CITY) {
+                    selectedCity = cityList.get(position);
+                    queryCounties();
+                }
+            }
+        });*/
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -84,6 +98,12 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
                     queryCounties();
+                }else if(currentLevel==LEVEL_COUNTY){
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                    intent.putExtra("weather_id",weatherId);    // 向intent传入WeatherId
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -100,7 +120,7 @@ public class ChooseAreaFragment extends Fragment {
         queryProvinces();   // 加载省级数据
     }
     /**
-     * 查询全国所有的省，优先从数据库中查，如果没有查询到再到服务器上查
+     * 查询全国所有的省，优先从数据库中查询，如果没有查询到再到服务器上查询
      */
     private void queryProvinces() {
         titleText.setText("中国");    // 设置头布局标题
@@ -120,12 +140,12 @@ public class ChooseAreaFragment extends Fragment {
         }
     }
     /**
-     * 查询选中县内所有的市，优先从数据库中查，如果没有查询到再到服务器上查
+     * 查询选中县内所有的市，优先从数据库中查询，如果没有查询到再到服务器上查询
      */
     private void queryCities() {
         titleText.setText(selectedProvince.getProvinceName());
         backButton.setVisibility(View.VISIBLE);
-        cityList = DataSupport.where("provinceId=?", String.valueOf(selectedProvince.getId()))
+        cityList = DataSupport.where("provincecode=?", String.valueOf(selectedProvince.getId()))
                 .find(City.class);
         if (cityList.size() > 0) {
             dataList.clear();
@@ -147,7 +167,7 @@ public class ChooseAreaFragment extends Fragment {
     private void queryCounties() {
         titleText.setText(selectedCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
-        countyList = DataSupport.where("cityId=?", String.valueOf(selectedCity.getId()))
+        countyList = DataSupport.where("cityid=?", String.valueOf(selectedCity.getId()))
                 .find(County.class);
         if (countyList.size() > 0) {
             dataList.clear();
