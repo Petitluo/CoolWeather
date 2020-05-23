@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp">
-
     <!-- 显示天气预报日期 -->
     <TextView
         android:id="@+id/date_text"
@@ -12,7 +11,6 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="2"
         android:textColor="#fff" />
-
     <!-- 显示天气预报概况 -->
     <TextView
         android:id="@+id/info_text"
@@ -22,7 +20,6 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="#fff" />
-
     <!-- 显示最高温 -->
     <TextView
         android:id="@+id/max_text"
@@ -32,7 +29,6 @@
         android:layout_weight="1"
         android:gravity="right"
         android:textColor="#fff" />
-
     <!-- 显示最低温 -->
     <TextView
         android:id="@+id/min_text"
@@ -42,5 +38,4 @@
         android:layout_weight="1"
         android:gravity="right"
         android:textColor="#fff" />
-
 </LinearLayout>
