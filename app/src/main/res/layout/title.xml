@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize">
+
     <!-- 居左显示切换城市的按钮 -->
     <Button
         android:layout_width="30dp"
